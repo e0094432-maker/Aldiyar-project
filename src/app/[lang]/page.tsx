@@ -41,7 +41,9 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
     <>
       <Hero
         id={sectionIds.hero}
+        eyebrow={dict.hero.eyebrow}
         title={dict.hero.title}
+        accent={dict.hero.titleAccent}
         subtitle={dict.hero.subtitle}
         primary={cta}
         secondary={{
@@ -68,12 +70,18 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
       />
       <Faq
         id={sectionIds.faq}
+        index="06"
         eyebrow={dict.faq.eyebrow}
         title={dict.faq.title}
         items={dict.faq.items}
-        className="bg-muted"
       />
-      <LeadSection locale={lang} dict={dict.form} page={paths.home(lang)} />
+      <LeadSection
+        locale={lang}
+        dict={dict.form}
+        whatsappPrefill={dict.common.whatsappPrefill}
+        page={paths.home(lang)}
+        index="07"
+      />
     </>
   );
 }

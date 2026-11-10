@@ -22,19 +22,19 @@ export async function Header() {
   const ctaHref = paths.section(locale, sectionIds.request);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line/80 bg-white/90 backdrop-blur-md supports-[backdrop-filter]:bg-white/75">
-      <div className="container-page flex h-16 items-center gap-6 lg:h-[4.5rem]">
+    <header className="sticky top-0 z-50 border-b border-line bg-paper/95 backdrop-blur-md supports-[backdrop-filter]:bg-paper/90">
+      <div className="container-page flex h-16 items-center gap-8 lg:h-[4.75rem]">
         <Logo href={paths.home(locale)} />
 
         <nav
           aria-label={dict.common.menu}
-          className="hidden items-center gap-1 lg:flex"
+          className="hidden items-center gap-7 lg:flex"
         >
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-full px-3 py-2 text-[15px] font-medium text-ink-muted transition-colors hover:bg-muted hover:text-ink"
+              className="relative py-2 text-[14.5px] font-medium text-ink-muted transition-colors after:absolute after:inset-x-0 after:bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-brass after:transition-transform after:duration-300 hover:text-ink hover:after:scale-x-100"
             >
               {link.label}
             </Link>
@@ -57,9 +57,9 @@ export async function Header() {
 
           <a
             href={`tel:${site.phone.tel}`}
-            className="hidden items-center gap-2 text-[15px] font-semibold whitespace-nowrap text-ink xl:inline-flex"
+            className="hidden items-center gap-2 text-[14.5px] font-medium whitespace-nowrap text-ink tabular-nums xl:inline-flex"
           >
-            <Icon name="phone" size={16} className="text-brand" />
+            <Icon name="phone" size={16} className="text-brass" />
             <T>{site.phone.display}</T>
           </a>
 

@@ -31,6 +31,8 @@ export const en: Dictionary = {
     placeholderNote: "Items in [brackets] are to be confirmed",
   },
   hero: {
+    eyebrow: "Legal advisory · Astana",
+    titleAccent: "in Kazakhstan",
     title: "Opening a foreign university branch in Kazakhstan",
     subtitle:
       "We structure the project, negotiate with the university, prepare the agreement and support you through preparation for opening — in Astana, Almaty and other cities.",
@@ -363,6 +365,7 @@ export const en: Dictionary = {
     submit: "Send request",
     sending: "Sending…",
     requiredHint: "* — required fields",
+    direct: "Or contact us directly",
     errors: {
       required: "Please fill in this field",
       email: "Please check your email",

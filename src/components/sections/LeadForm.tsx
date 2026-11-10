@@ -104,7 +104,11 @@ export function LeadForm({
   const id = (name: string) => `${uid}-${name}`;
 
   return (
-    <form onSubmit={onSubmit} noValidate className="grid gap-5 sm:grid-cols-2">
+    <form
+      onSubmit={onSubmit}
+      noValidate
+      className="grid gap-x-8 gap-y-7 sm:grid-cols-2"
+    >
       <Field
         id={id("name")}
         label={dict.fields.name}
@@ -200,7 +204,7 @@ export function LeadForm({
           rows={4}
           maxLength={leadLimits.message}
           placeholder={dict.fields.messagePlaceholder}
-          className={`${inputClass} h-auto resize-y py-3`}
+          className={`${inputClass} h-auto min-h-24 resize-y border-b py-3`}
         />
       </Field>
 
@@ -221,7 +225,7 @@ export function LeadForm({
             <input
               type="checkbox"
               name="consent"
-              className="mt-0.5 size-5 shrink-0 cursor-pointer rounded accent-brand"
+              className="mt-0.5 size-[18px] shrink-0 cursor-pointer accent-ink"
               {...a11y(id("consent"), err("consent"))}
             />
             <span>
@@ -229,12 +233,12 @@ export function LeadForm({
               <Link
                 href={privacyHref}
                 target="_blank"
-                className="font-medium text-brand underline underline-offset-2"
+                className="text-ink underline decoration-brass/60 underline-offset-2 hover:decoration-brass"
               >
                 {dict.consentLink}
               </Link>
               {dict.consentAfter}
-              <span className="text-brand"> *</span>
+              <span className="text-brass"> *</span>
             </span>
           </label>
           {err("consent") && (
@@ -245,16 +249,26 @@ export function LeadForm({
         <button
           type="submit"
           disabled={status === "sending"}
-          className={buttonClass("primary", "lg", "w-full shrink-0 md:w-auto")}
+          className={buttonClass(
+            "primary",
+            "lg",
+            "group/btn w-full shrink-0 md:w-auto",
+          )}
         >
           {status === "sending" ? dict.sending : dict.submit}
-          {status !== "sending" && <Icon name="arrowRight" size={18} />}
+          {status !== "sending" && (
+            <Icon
+              name="arrowRight"
+              size={16}
+              className="transition-transform group-hover/btn:translate-x-1"
+            />
+          )}
         </button>
       </div>
 
       <div className="sm:col-span-2" aria-live="polite">
         {status === "error" && (
-          <p className="rounded-xl bg-red-50 px-4 py-3 text-[15px] text-red-800">
+          <p className="border-l-2 border-red-700 bg-red-50 px-4 py-3 text-[15px] text-red-800">
             {dict.errors.generic}
           </p>
         )}
@@ -264,7 +278,7 @@ export function LeadForm({
 }
 
 const inputClass =
-  "h-12 w-full rounded-xl border border-line bg-white px-4 text-[16px] text-ink placeholder:text-ink-subtle/70 transition-colors outline-none focus:border-brand focus:ring-4 focus:ring-brand/10 aria-[invalid=true]:border-red-500";
+  "h-12 w-full rounded-none border-0 border-b border-line bg-transparent px-0 text-[16px] text-ink placeholder:text-ink-subtle/70 transition-colors outline-none focus:border-ink aria-[invalid=true]:border-red-600";
 
 function a11y(id: string, error?: string) {
   return error
@@ -289,12 +303,9 @@ function Field({
 }) {
   return (
     <div className={className}>
-      <label
-        htmlFor={id}
-        className="mb-2 block text-[15px] font-semibold text-ink"
-      >
+      <label htmlFor={id} className="block label-caps text-ink-muted">
         {label}
-        {required && <span className="text-brand"> *</span>}
+        {required && <span className="text-brass"> *</span>}
       </label>
       {children}
       {error && <ErrorText id={id}>{error}</ErrorText>}
@@ -315,12 +326,12 @@ function Select(props: React.ComponentProps<"select">) {
     <div className="relative">
       <select
         {...props}
-        className={`${inputClass} cursor-pointer appearance-none pr-11`}
+        className={`${inputClass} cursor-pointer appearance-none pr-8`}
       />
       <Icon
         name="chevronDown"
         size={18}
-        className="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 text-ink-subtle"
+        className="pointer-events-none absolute top-1/2 right-0 -translate-y-1/2 text-brass"
       />
     </div>
   );

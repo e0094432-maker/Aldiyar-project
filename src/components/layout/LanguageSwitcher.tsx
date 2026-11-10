@@ -51,9 +51,9 @@ function LanguageLinks({
               document.cookie = `${LOCALE_COOKIE}=${l}; path=/; max-age=31536000; samesite=lax`;
               onNavigate?.();
             }}
-            className={`rounded-md px-2 py-1 text-[13px] font-bold tracking-wide transition-colors ${
+            className={`px-1.5 py-1.5 label-caps transition-colors ${
               active
-                ? "bg-brand-soft text-brand"
+                ? "text-ink underline decoration-brass decoration-2 underline-offset-[6px]"
                 : "text-ink-subtle hover:text-ink"
             }`}
           >

@@ -2,25 +2,31 @@ import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
 import { Icon, type IconName } from "./Icon";
 
-type Variant = "primary" | "secondary" | "ghost" | "whatsapp" | "light";
+type Variant =
+  | "primary" // чернильная — на светлом фоне
+  | "accent" // латунная — на тёмном фоне
+  | "outline" // контурная — на светлом фоне
+  | "outlineLight" // контурная — на тёмном фоне
+  | "whatsapp";
 type Size = "md" | "lg";
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-full font-semibold whitespace-nowrap transition-colors duration-150 disabled:pointer-events-none disabled:opacity-60";
+  "group/btn inline-flex items-center justify-center gap-2.5 rounded-[3px] font-semibold uppercase tracking-[0.12em] whitespace-nowrap transition-[background-color,border-color,color,box-shadow] duration-200 disabled:pointer-events-none disabled:opacity-60";
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-brand text-white hover:bg-brand-hover shadow-[0_1px_2px_rgb(16_24_40/0.08)]",
-  secondary:
-    "border border-brand/30 bg-white text-brand hover:border-brand hover:bg-brand-soft",
-  ghost: "text-ink hover:bg-muted",
+    "bg-ink text-paper hover:bg-ink-2 shadow-[inset_0_-2px_0_rgb(169_132_74/0.9)]",
+  accent: "bg-brass-light text-ink hover:bg-[#dcc290]",
+  outline:
+    "border border-ink/25 text-ink hover:border-ink hover:bg-ink hover:text-paper",
+  outlineLight:
+    "border border-paper/30 text-paper hover:border-brass-light hover:text-brass-light",
   whatsapp: "bg-whatsapp text-white hover:brightness-95",
-  light: "bg-white text-brand-deep hover:bg-brand-soft",
 };
 
 const sizes: Record<Size, string> = {
-  md: "h-11 px-5 text-[15px]",
-  lg: "h-13 px-7 text-base",
+  md: "h-11 px-5 text-[12px]",
+  lg: "h-13 px-7 text-[13px]",
 };
 
 export function buttonClass(
@@ -36,7 +42,8 @@ type ButtonLinkProps = {
   variant?: Variant;
   size?: Size;
   icon?: IconName;
-  iconRight?: IconName;
+  /** Стрелка справа, сдвигается при наведении. */
+  arrow?: boolean;
   className?: string;
   children: ReactNode;
   /** Внешняя ссылка: откроется в новой вкладке. */
@@ -48,7 +55,7 @@ export function ButtonLink({
   variant = "primary",
   size = "md",
   icon,
-  iconRight,
+  arrow,
   className,
   children,
   external,
@@ -58,7 +65,13 @@ export function ButtonLink({
     <>
       {icon && <Icon name={icon} size={18} />}
       <span>{children}</span>
-      {iconRight && <Icon name={iconRight} size={18} />}
+      {arrow && (
+        <Icon
+          name="arrowRight"
+          size={16}
+          className="transition-transform duration-200 group-hover/btn:translate-x-1"
+        />
+      )}
     </>
   );
   const cls = buttonClass(variant, size, className);

@@ -29,23 +29,26 @@ export default async function PrivacyPage({
   const t = getDictionaryFor(lang).privacy;
 
   return (
-    <article className="py-14 sm:py-20">
+    <article className="py-16 sm:py-24">
       <div className="container-page max-w-3xl">
-        <h1 className="text-3xl font-extrabold tracking-tight text-ink sm:text-[2.75rem] sm:leading-tight">
+        <p className="label-caps text-brass">EduForge Advisory</p>
+        <h1 className="mt-5 font-display text-[2.75rem] leading-none text-ink sm:text-[4rem]">
           {t.title}
         </h1>
-        <p className="mt-3 text-ink-subtle">
+        <p className="mt-5 text-ink-subtle">
           <T>{t.updated}</T>
         </p>
-        <p className="mt-6 rounded-xl bg-amber-50 px-4 py-3 text-[15px] text-amber-900">
+        <p className="mt-8 border-l-2 border-brass bg-brass-soft/60 px-5 py-4 text-[15px] text-ink">
           {t.draftNote}
         </p>
 
-        <div className="mt-10 space-y-10">
+        <div className="mt-14 space-y-12 border-t border-line pt-12">
           {t.sections.map((section) => (
             <section key={section.title}>
-              <h2 className="text-xl font-bold text-ink">{section.title}</h2>
-              <div className="mt-3 space-y-3 text-[16px] leading-relaxed text-ink-muted">
+              <h2 className="font-display text-[1.75rem] leading-tight text-ink">
+                {section.title}
+              </h2>
+              <div className="mt-4 space-y-3 text-[16.5px] leading-relaxed text-ink-muted">
                 {section.paragraphs.map((p) => (
                   <p key={p}>
                     <T>{p}</T>
