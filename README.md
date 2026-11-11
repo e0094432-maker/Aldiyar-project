@@ -4,7 +4,8 @@
 Задача сайта — объяснить, что компания помогает открыть филиал зарубежного вуза
 в Казахстане, и получить заявку («Обсудить проект»). Языки: RU / EN / KK.
 
-**Сайт:** https://eduforge-8v0r.onrender.com (Render, автодеплой из ветки `claude/new-session-h6mm0x`)
+**Хостинг:** Vercel (бесплатный план Hobby, автодеплой из ветки `claude/new-session-h6mm0x`).
+Старый адрес на Render (https://eduforge-8v0r.onrender.com) приостановлен — у workspace закончились бесплатные часы.
 
 ## Стек
 
@@ -118,7 +119,16 @@ src/
 
 ## Деплой
 
-Сейчас — **Render** (Free, Frankfurt): build `npm ci && npm run build`, start `npm start`,
+### Vercel (основной)
+
+vercel.com → Sign up with GitHub → **Add New → Project** → импортировать `Aldiyar-project` → **Deploy**.
+Настраивать ничего не нужно: адрес сайта для canonical/sitemap берётся из `VERCEL_PROJECT_PRODUCTION_URL`.
+Для своего домена задать `NEXT_PUBLIC_SITE_URL`, для писем — SMTP-переменные из `.env.example`.
+Free-план Vercel не «засыпает» и предназначен для некоммерческих проектов — для боевого сайта нужен Pro.
+
+### Render (запасной)
+
+Был — **Render** (Free, Frankfurt): build `npm ci && npm run build`, start `npm start`,
 переменные `NODE_VERSION=22`, `NEXT_PUBLIC_SITE_URL`. Для писем добавить SMTP-переменные из `.env.example`.
 
 Подходит и любой другой хостинг с Node.js (Vercel, VPS, Docker).

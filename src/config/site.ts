@@ -6,7 +6,7 @@
  */
 export const site = {
   name: "EduForge Advisory",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  url: siteUrl(),
 
   phone: {
     display: "+7 [___ ___ __ __]",
@@ -29,6 +29,17 @@ export const site = {
     embedUrl: "",
   },
 } as const;
+
+/**
+ * Адрес сайта для canonical, hreflang и sitemap:
+ * NEXT_PUBLIC_SITE_URL → на Vercel его production-домен (подставляется сам) → localhost.
+ */
+function siteUrl() {
+  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL)
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  return "http://localhost:3000";
+}
 
 export function whatsappUrl(text?: string) {
   const base = `https://wa.me/${site.whatsapp}`;
