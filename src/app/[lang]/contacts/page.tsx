@@ -37,113 +37,102 @@ export default async function ContactsPage({
 
   return (
     <>
-      <section className="border-b border-line py-16 sm:py-24">
+      <section className="border-b border-line bg-gradient-to-b from-white to-muted/60 py-14 sm:py-20">
         <div className="container-page">
-          <SectionHeading
-            as="h1"
-            eyebrow={dict.meta.siteName}
-            title={t.title}
-            subtitle={t.subtitle}
-          />
+          <SectionHeading as="h1" title={t.title} subtitle={t.subtitle} />
 
-          <div className="mt-14 grid gap-6 lg:grid-cols-[1fr_1.25fr]">
-            <dl className="reveal grid gap-px self-start overflow-hidden rounded-card border border-line bg-line sm:grid-cols-2">
-              <ContactCell icon="mapPin" title={t.address} wide>
-                <span className="font-display text-[1.6rem] leading-snug">
-                  {dict.contacts.address}
-                </span>
-              </ContactCell>
-              <ContactCell icon="phone" title={t.phone}>
-                <a
-                  href={`tel:${site.phone.tel}`}
-                  className="tabular-nums hover:text-brass"
-                >
+          <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_1.3fr]">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <ContactCard icon="mapPin" title={t.address}>
+                {dict.contacts.address}
+              </ContactCard>
+              <ContactCard icon="clock" title={t.hours}>
+                <T>{dict.contacts.hours}</T>
+              </ContactCard>
+              <ContactCard icon="phone" title={t.phone}>
+                <a href={`tel:${site.phone.tel}`} className="hover:text-brand">
                   <T>{site.phone.display}</T>
                 </a>
-              </ContactCell>
-              <ContactCell icon="mail" title={t.email}>
+              </ContactCard>
+              <ContactCard icon="mail" title={t.email}>
                 <a
                   href={`mailto:${site.email.address}`}
-                  className="break-all hover:text-brass"
+                  className="break-all hover:text-brand"
                 >
                   <T>{site.email.display}</T>
                 </a>
-              </ContactCell>
-              <ContactCell icon="clock" title={t.hours}>
-                <T>{dict.contacts.hours}</T>
-              </ContactCell>
-              <ContactCell icon="messages" title={t.messengers}>
-                <div className="flex flex-wrap gap-x-5 gap-y-2">
-                  <a
+              </ContactCard>
+              <ContactCard
+                icon="messages"
+                title={t.messengers}
+                className="sm:col-span-2"
+              >
+                <div className="mt-1 flex flex-wrap gap-3">
+                  <ButtonLink
                     href={whatsappUrl(dict.common.whatsappPrefill)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 hover:text-brass"
+                    variant="whatsapp"
+                    icon="whatsapp"
+                    external
                   >
-                    <Icon name="whatsapp" size={18} className="text-whatsapp" />
                     WhatsApp
-                  </a>
-                  <a
+                  </ButtonLink>
+                  <ButtonLink
                     href={telegramUrl()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 hover:text-brass"
+                    variant="secondary"
+                    icon="telegram"
+                    external
                   >
-                    <Icon
-                      name="telegram"
-                      size={18}
-                      className="text-[#2aabee]"
-                    />
                     Telegram
-                  </a>
+                  </ButtonLink>
                 </div>
-              </ContactCell>
-              <ContactCell icon="file" title={t.requisites} wide>
-                <ul className="space-y-1 text-[15px] font-normal text-ink-muted">
+              </ContactCard>
+              <ContactCard
+                icon="file"
+                title={t.requisites}
+                className="sm:col-span-2"
+              >
+                <ul className="space-y-1">
                   {dict.contacts.requisites.map((line) => (
                     <li key={line}>
                       <T>{line}</T>
                     </li>
                   ))}
                 </ul>
-              </ContactCell>
-            </dl>
+              </ContactCard>
+            </div>
 
             <Map label={t.mapPlaceholder} openLabel={t.openMap} />
           </div>
         </div>
       </section>
 
-      <LeadSection
-        locale={lang}
-        dict={dict.form}
-        whatsappPrefill={dict.common.whatsappPrefill}
-        page={paths.contacts(lang)}
-      />
+      <LeadSection locale={lang} dict={dict.form} page={paths.contacts(lang)} />
     </>
   );
 }
 
-function ContactCell({
+function ContactCard({
   icon,
   title,
-  wide,
+  className = "",
   children,
 }: {
   icon: IconName;
   title: string;
-  wide?: boolean;
+  className?: string;
   children: ReactNode;
 }) {
   return (
-    <div className={`bg-card p-7 ${wide ? "sm:col-span-2" : ""}`}>
-      <dt className="flex items-center gap-2.5 label-caps text-ink-subtle">
-        <Icon name={icon} size={16} strokeWidth={1.6} className="text-brass" />
+    <div
+      className={`rounded-2xl border border-line bg-white p-6 shadow-card ${className}`}
+    >
+      <div className="flex items-center gap-2.5 text-sm font-semibold text-ink-subtle">
+        <Icon name={icon} size={18} className="text-brand" />
         {title}
-      </dt>
-      <dd className="mt-4 text-[16px] leading-relaxed font-medium text-ink">
+      </div>
+      <div className="mt-3 text-[16px] leading-relaxed font-medium text-ink">
         {children}
-      </dd>
+      </div>
     </div>
   );
 }
@@ -151,7 +140,7 @@ function ContactCell({
 /** Карта 2ГИС. Пока нет URL виджета (site.map.embedUrl) — показываем заглушку со ссылкой. */
 function Map({ label, openLabel }: { label: string; openLabel: string }) {
   return (
-    <div className="reveal grain relative min-h-96 overflow-hidden rounded-card bg-ink">
+    <div className="relative min-h-80 overflow-hidden rounded-card border border-line bg-muted">
       {site.map.embedUrl ? (
         <iframe
           src={site.map.embedUrl}
@@ -160,23 +149,21 @@ function Map({ label, openLabel }: { label: string; openLabel: string }) {
           className="absolute inset-0 size-full border-0"
         />
       ) : (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-5 blueprint p-6 text-center">
-          {/* стилизованная «карта»: кольца вокруг точки офиса */}
-          <span className="relative inline-flex size-16 items-center justify-center">
-            <span className="absolute inset-0 animate-glow rounded-full border border-brass-light" />
-            <span className="absolute -inset-8 rounded-full border border-paper/10" />
-            <span className="absolute -inset-20 rounded-full border border-paper/5" />
-            <Icon
-              name="mapPin"
-              size={28}
-              className="relative text-brass-light"
-            />
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-[radial-gradient(circle,rgb(31_79_209/0.12)_1px,transparent_1px)] [background-size:18px_18px] p-6 text-center">
+          <span className="inline-flex size-14 items-center justify-center rounded-full bg-white text-brand shadow-card">
+            <Icon name="mapPin" size={26} />
           </span>
-          <p className="mt-6 label-caps text-paper/50">{label}</p>
+          <p className="text-ink-subtle">{label}</p>
         </div>
       )}
-      <div className="absolute right-5 bottom-5">
-        <ButtonLink href={site.map.link} variant="accent" arrow external>
+      <div className="absolute right-4 bottom-4">
+        <ButtonLink
+          href={site.map.link}
+          variant="light"
+          iconRight="arrowRight"
+          external
+          className="shadow-lift"
+        >
           {openLabel}
         </ButtonLink>
       </div>

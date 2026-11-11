@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ButtonLink } from "@/components/ui/Button";
+import { Icon } from "@/components/ui/Icon";
 import { T } from "@/components/ui/T";
 import { whatsappUrl } from "@/config/site";
 import { getDictionaryFor } from "@/content/dictionaries";
@@ -32,54 +33,19 @@ export default async function ThankYouPage({
   const dict = getDictionaryFor(lang);
 
   return (
-    <section className="grain relative overflow-hidden bg-ink blueprint py-24 text-paper sm:py-32">
+    <section className="py-20 sm:py-28">
       <div className="container-page">
-        <div className="mx-auto max-w-2xl text-center">
-          <svg
-            viewBox="0 0 120 120"
-            aria-hidden="true"
-            className="mx-auto size-28"
-          >
-            {[50, 36, 22].map((r, i) => (
-              <path
-                key={r}
-                d={`M${60 - r} 110V${110 - r * 0.6}A${r} ${r} 0 0 1 ${60 + r} ${110 - r * 0.6}V110`}
-                pathLength={1}
-                strokeDasharray="1"
-                fill="none"
-                stroke={i === 0 ? "#d2b47c" : "#f7f3ec"}
-                strokeOpacity={i === 0 ? 1 : 0.6 - i * 0.15}
-                strokeWidth="1.5"
-                className="animate-draw"
-                style={{ animationDelay: `${i * 150}ms` }}
-              />
-            ))}
-            <path
-              d="m48 86 8 8 16-18"
-              fill="none"
-              stroke="#d2b47c"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              pathLength={1}
-              strokeDasharray="1"
-              className="animate-draw"
-              style={{ animationDelay: "600ms" }}
-            />
-          </svg>
-          <h1 className="mt-10 animate-rise font-display text-[3rem] leading-none sm:text-[4.5rem]">
+        <div className="mx-auto max-w-xl text-center">
+          <span className="mx-auto inline-flex size-16 items-center justify-center rounded-full bg-brand-soft text-brand">
+            <Icon name="check" size={30} strokeWidth={2.5} />
+          </span>
+          <h1 className="mt-8 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
             {dict.thanks.title}
           </h1>
-          <p
-            className="mx-auto mt-6 max-w-lg animate-rise text-lg leading-relaxed text-paper/70"
-            style={{ animationDelay: "150ms" }}
-          >
+          <p className="mt-4 text-lg leading-relaxed text-ink-muted">
             <T>{dict.thanks.text}</T>
           </p>
-          <div
-            className="mt-12 flex animate-rise flex-col justify-center gap-3 sm:flex-row"
-            style={{ animationDelay: "300ms" }}
-          >
+          <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
             <ButtonLink
               href={whatsappUrl(dict.common.whatsappPrefill)}
               variant="whatsapp"
@@ -89,11 +55,7 @@ export default async function ThankYouPage({
             >
               {dict.common.whatsapp}
             </ButtonLink>
-            <ButtonLink
-              href={paths.home(lang)}
-              variant="outlineLight"
-              size="lg"
-            >
+            <ButtonLink href={paths.home(lang)} variant="secondary" size="lg">
               {dict.common.backHome}
             </ButtonLink>
           </div>

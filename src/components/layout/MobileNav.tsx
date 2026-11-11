@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { buttonClass } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
+import { buttonClass } from "@/components/ui/Button";
 import type { Locale } from "@/i18n/config";
 import { LanguageSwitcher, LanguageSwitcherStatic } from "./LanguageSwitcher";
 
@@ -41,9 +41,9 @@ export function MobileNav({ locale, links, cta, phone, labels }: Props) {
         aria-expanded={open}
         aria-controls="mobile-nav"
         aria-label={open ? labels.close : labels.menu}
-        className="-mr-2 inline-flex size-11 items-center justify-center text-ink"
+        className="-mr-2 inline-flex size-11 items-center justify-center rounded-full text-ink hover:bg-muted"
       >
-        <Icon name={open ? "close" : "menu"} size={24} strokeWidth={1.5} />
+        <Icon name={open ? "close" : "menu"} size={22} />
       </button>
 
       {/* Портал: у шапки backdrop-filter, иначе fixed-панель привязалась бы к шапке. */}
@@ -51,27 +51,23 @@ export function MobileNav({ locale, links, cta, phone, labels }: Props) {
         createPortal(
           <div
             id="mobile-nav"
-            className="fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto border-t border-line bg-paper"
+            className="fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto border-t border-line bg-white"
           >
-            <div className="container-page flex min-h-full flex-col gap-8 py-8">
+            <div className="container-page flex flex-col gap-6 py-6">
               <nav className="flex flex-col">
-                {links.map((link, i) => (
+                {links.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
                     onClick={close}
-                    style={{ animationDelay: `${i * 50}ms` }}
-                    className="flex animate-rise items-baseline gap-4 border-b border-line py-4 font-display text-[2rem] leading-none text-ink"
+                    className="border-b border-line py-4 text-lg font-semibold text-ink"
                   >
-                    <span className="font-sans text-xs font-semibold text-brass tabular-nums">
-                      0{i + 1}
-                    </span>
                     {link.label}
                   </Link>
                 ))}
               </nav>
 
-              <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center justify-between">
                 <Suspense
                   fallback={
                     <LanguageSwitcherStatic
@@ -88,9 +84,9 @@ export function MobileNav({ locale, links, cta, phone, labels }: Props) {
                 </Suspense>
                 <a
                   href={phone.href}
-                  className="inline-flex items-center gap-2 font-medium text-ink tabular-nums"
+                  className="inline-flex items-center gap-2 font-semibold text-ink"
                 >
-                  <Icon name="phone" size={18} className="text-brass" />
+                  <Icon name="phone" size={18} className="text-brand" />
                   {phone.label}
                 </a>
               </div>
@@ -98,7 +94,7 @@ export function MobileNav({ locale, links, cta, phone, labels }: Props) {
               <Link
                 href={cta.href}
                 onClick={close}
-                className={buttonClass("primary", "lg", "mt-auto w-full")}
+                className={buttonClass("primary", "lg", "w-full")}
               >
                 {cta.label}
               </Link>

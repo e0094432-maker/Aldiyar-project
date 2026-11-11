@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { T } from "@/components/ui/T";
 import { site, telegramUrl, whatsappUrl } from "@/config/site";
@@ -21,38 +20,25 @@ export async function Footer() {
   return (
     <footer
       id={sectionIds.contacts}
-      className="grain bg-ink blueprint pt-20 pb-28 text-paper/75 sm:pb-14"
+      className="bg-brand-deep pt-16 pb-24 text-white/80 sm:pb-12"
     >
       <div className="container-page">
-        {/* Крупная строка-описание + CTA */}
-        <div className="flex flex-col gap-8 border-b border-paper/10 pb-14 lg:flex-row lg:items-end lg:justify-between">
-          <p className="max-w-3xl font-display text-[2rem] leading-[1.1] text-balance text-paper sm:text-[2.75rem]">
-            {dict.footer.tagline}
-          </p>
-          <ButtonLink
-            href={paths.section(locale, sectionIds.request)}
-            variant="accent"
-            size="lg"
-            arrow
-            className="shrink-0 self-start lg:self-auto"
-          >
-            {dict.common.cta}
-          </ButtonLink>
-        </div>
-
-        <div className="grid gap-12 pt-14 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1.3fr_1.2fr]">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.2fr_1.2fr]">
           <div>
             <Logo href={paths.home(locale)} light />
+            <p className="mt-5 max-w-xs text-[15px] leading-relaxed text-white/70">
+              {dict.footer.tagline}
+            </p>
           </div>
 
           <div>
             <FooterTitle>{dict.footer.navTitle}</FooterTitle>
-            <ul className="mt-5 space-y-3 text-[15px]">
+            <ul className="mt-4 space-y-2.5 text-[15px]">
               {navItems.map((item) => (
                 <li key={item.id}>
                   <Link
                     href={paths.section(locale, item.id)}
-                    className="transition-colors hover:text-brass-light"
+                    className="hover:text-white"
                   >
                     {dict.nav[item.key]}
                   </Link>
@@ -63,7 +49,7 @@ export async function Footer() {
 
           <div>
             <FooterTitle>{dict.footer.contactsTitle}</FooterTitle>
-            <ul className="mt-5 space-y-3.5 text-[15px]">
+            <ul className="mt-4 space-y-3 text-[15px]">
               <FooterContact icon="phone" href={`tel:${site.phone.tel}`}>
                 <T>{site.phone.display}</T>
               </FooterContact>
@@ -84,27 +70,23 @@ export async function Footer() {
                 <Icon
                   name="mapPin"
                   size={18}
-                  className="mt-0.5 shrink-0 text-brass-light/70"
+                  className="mt-0.5 shrink-0 text-white/50"
                 />
                 <span>{dict.contacts.address}</span>
               </li>
             </ul>
             <Link
               href={paths.contacts(locale)}
-              className="group mt-6 inline-flex items-center gap-2 text-[15px] font-medium text-paper underline decoration-brass-light/40 underline-offset-4 hover:decoration-brass-light"
+              className="mt-4 inline-flex items-center gap-1.5 text-[15px] font-semibold text-white hover:underline"
             >
               {dict.footer.allContacts}
-              <Icon
-                name="arrowRight"
-                size={16}
-                className="transition-transform group-hover:translate-x-1"
-              />
+              <Icon name="arrowRight" size={16} />
             </Link>
           </div>
 
           <div>
             <FooterTitle>{dict.footer.requisitesTitle}</FooterTitle>
-            <ul className="mt-5 space-y-2 text-[14.5px] text-paper/65">
+            <ul className="mt-4 space-y-1.5 text-[15px] text-white/70">
               {dict.contacts.requisites.map((line) => (
                 <li key={line}>
                   <T>{line}</T>
@@ -114,18 +96,15 @@ export async function Footer() {
           </div>
         </div>
 
-        <p className="mt-16 max-w-4xl text-[13px] leading-relaxed text-paper/45">
+        <p className="mt-12 max-w-4xl text-[13px] leading-relaxed text-white/50">
           {dict.footer.disclaimer}
         </p>
 
-        <div className="mt-6 flex flex-col gap-3 border-t border-paper/10 pt-6 text-[13px] text-paper/45 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-6 flex flex-col gap-3 border-t border-white/10 pt-6 text-[13px] text-white/50 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} EduForge Advisory. {dict.footer.rights}
           </p>
-          <Link
-            href={paths.privacy(locale)}
-            className="transition-colors hover:text-paper"
-          >
+          <Link href={paths.privacy(locale)} className="hover:text-white">
             {dict.footer.privacy}
           </Link>
         </div>
@@ -135,7 +114,11 @@ export async function Footer() {
 }
 
 function FooterTitle({ children }: { children: React.ReactNode }) {
-  return <h2 className="label-caps text-brass-light">{children}</h2>;
+  return (
+    <h2 className="text-[13px] font-bold tracking-[0.14em] text-white uppercase">
+      {children}
+    </h2>
+  );
 }
 
 function FooterContact({
@@ -153,14 +136,10 @@ function FooterContact({
     <li>
       <a
         href={href}
-        className="inline-flex gap-3 transition-colors hover:text-paper"
+        className="inline-flex gap-3 hover:text-white"
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       >
-        <Icon
-          name={icon}
-          size={18}
-          className="mt-0.5 shrink-0 text-brass-light/70"
-        />
+        <Icon name={icon} size={18} className="mt-0.5 shrink-0 text-white/50" />
         <span>{children}</span>
       </a>
     </li>

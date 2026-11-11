@@ -50,11 +50,7 @@ export type Dictionary = {
     placeholderNote: string;
   };
   hero: {
-    /** Подпись над заголовком первого экрана. */
-    eyebrow: string;
     title: string;
-    /** Часть заголовка, выделенная курсивом (должна в нём встречаться). */
-    titleAccent: string;
     subtitle: string;
     facts: string[];
   };
@@ -118,8 +114,6 @@ export type Dictionary = {
     submit: string;
     sending: string;
     requiredHint: string;
-    /** Подпись над прямыми контактами рядом с формой. */
-    direct: string;
     errors: {
       required: string;
       email: string;

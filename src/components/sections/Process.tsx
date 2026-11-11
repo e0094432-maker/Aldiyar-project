@@ -2,35 +2,26 @@ import { Section, SectionHeading } from "@/components/ui/Section";
 import type { Dictionary } from "@/content/dictionaries/types";
 import { sectionIds } from "@/i18n/paths";
 
-const roman = ["I", "II", "III", "IV", "V", "VI"];
-
 /** «Как работаем» — 4 пронумерованных шага. */
 export function Process({ dict }: { dict: Dictionary["process"] }) {
   return (
     <Section id={sectionIds.process}>
-      <SectionHeading index="03" eyebrow={dict.eyebrow} title={dict.title} />
-
-      <ol className="relative mt-16 grid gap-y-12 md:grid-cols-2 lg:grid-cols-4">
-        {/* общая линия-таймлайн */}
-        <span
-          aria-hidden="true"
-          className="absolute top-[2.15rem] right-0 left-0 hidden h-px bg-line lg:block"
-        />
+      <SectionHeading eyebrow={dict.eyebrow} title={dict.title} />
+      <ol className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4 lg:gap-6">
         {dict.steps.map((step, i) => (
-          <li key={step.title} className="reveal relative lg:pr-8">
-            <div className="flex items-center gap-4">
-              <span className="relative z-10 inline-flex size-[4.3rem] items-center justify-center rounded-full border border-brass/50 bg-paper font-display text-[1.9rem] text-brass italic">
-                {roman[i]}
-              </span>
+          <li key={step.title} className="relative">
+            {/* соединительная линия между шагами на десктопе */}
+            {i < dict.steps.length - 1 && (
               <span
                 aria-hidden="true"
-                className="h-px flex-1 bg-line lg:hidden"
+                className="absolute top-6 left-16 hidden h-px w-[calc(100%-4rem)] bg-gradient-to-r from-brand/40 to-line lg:block"
               />
-            </div>
-            <h3 className="mt-7 font-display text-[1.75rem] leading-tight text-ink">
-              {step.title}
-            </h3>
-            <p className="mt-3 max-w-xs text-[16px] leading-relaxed text-ink-muted">
+            )}
+            <span className="relative inline-flex size-12 items-center justify-center rounded-full border-2 border-brand bg-white text-lg font-extrabold text-brand">
+              {i + 1}
+            </span>
+            <h3 className="mt-5 text-xl font-bold text-ink">{step.title}</h3>
+            <p className="mt-2 text-[16px] leading-relaxed text-ink-muted">
               {step.text}
             </p>
           </li>
