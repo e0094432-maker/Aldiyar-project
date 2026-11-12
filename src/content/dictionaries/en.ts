@@ -282,7 +282,7 @@ export const en: Dictionary = {
   },
   about: {
     eyebrow: "About us",
-    title: "One subject, in depth",
+    title: "We do one thing — and we do it well",
     text: "EduForge Advisory is a consulting company. We provide legal support for projects to open branches of foreign universities in Kazakhstan.",
     points: [
       {
