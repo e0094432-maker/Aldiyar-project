@@ -34,9 +34,17 @@ export function proxy(request: NextRequest) {
   return NextResponse.redirect(url);
 }
 
+/** Боты превью ссылок и поисковики: Telegram, WhatsApp, соцсети, Google и т.п. */
+const BOT_UA =
+  /bot|crawler|spider|facebookexternalhit|whatsapp|telegram|vkshare|skype|slack|discord|linkedin|instagram/i;
+
 function detectLocale(request: NextRequest): Locale {
   const fromCookie = request.cookies.get(LOCALE_COOKIE)?.value;
   if (hasLocale(fromCookie)) return fromCookie;
+
+  // Превью ссылки в мессенджерах всегда на основном языке — русском.
+  if (BOT_UA.test(request.headers.get("user-agent") ?? ""))
+    return defaultLocale;
 
   const header = request.headers.get("accept-language") ?? "";
   const preferred = header
