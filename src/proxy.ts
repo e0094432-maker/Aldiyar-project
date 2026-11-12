@@ -9,7 +9,7 @@ import {
 
 /**
  * Адреса без языка (/, /contacts, ...) перенаправляем на /{язык}/...
- * Язык: cookie выбора → Accept-Language браузера → русский по умолчанию.
+ * Язык: cookie выбора → русский/казахский, если они есть в браузере → английский → русский.
  */
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -47,10 +47,14 @@ function detectLocale(request: NextRequest): Locale {
     })
     .sort((a, b) => b.q - a.q);
 
+  // Если в настройках браузера вообще есть русский или казахский — берём их
+  // (у многих в Казахстане английский стоит первым, но русский тоже указан).
   for (const { lang } of preferred) {
     if (lang === "kk" || lang === "kz") return "kk";
-    if (hasLocale(lang)) return lang;
+    if (lang === "ru") return "ru";
   }
+  // Иначе английский — для зарубежных вузов.
+  if (preferred.some(({ lang }) => lang === "en")) return "en";
   return defaultLocale;
 }
 
